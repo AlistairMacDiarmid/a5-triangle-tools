@@ -27,7 +27,7 @@ public class EmptyCommand extends Command {
 		super(position);
 	}
 
-	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, TArg arg) {
-		return v.visitEmptyCommand(this, arg);
+	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, Object arg) {
+		return v.visitEmptyCommand(this, (TArg) arg);
 	}
 }

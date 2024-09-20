@@ -30,8 +30,8 @@ public class LetCommand extends Command {
 		C = cAST;
 	}
 
-	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, TArg arg) {
-		return v.visitLetCommand(this, arg);
+	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, Object arg) {
+		return v.visitLetCommand(this, (TArg) arg);
 	}
 
 	public final Declaration D;

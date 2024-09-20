@@ -28,9 +28,10 @@ public abstract class Command extends AbstractSyntaxTree {
 		super(position);
 	}
 
-	public abstract <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> visitor, TArg arg);
 
-	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> visitor) {
+	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> visitor, Object o) {
 		return visit(visitor, null);
 	}
+
+
 }

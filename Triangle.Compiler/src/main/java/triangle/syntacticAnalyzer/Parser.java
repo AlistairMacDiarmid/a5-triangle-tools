@@ -20,67 +20,17 @@ package triangle.syntacticAnalyzer;
 
 import triangle.ErrorReporter;
 import triangle.abstractSyntaxTrees.Program;
-import triangle.abstractSyntaxTrees.actuals.ActualParameter;
-import triangle.abstractSyntaxTrees.actuals.ActualParameterSequence;
-import triangle.abstractSyntaxTrees.actuals.ConstActualParameter;
-import triangle.abstractSyntaxTrees.actuals.EmptyActualParameterSequence;
-import triangle.abstractSyntaxTrees.actuals.FuncActualParameter;
-import triangle.abstractSyntaxTrees.actuals.MultipleActualParameterSequence;
-import triangle.abstractSyntaxTrees.actuals.ProcActualParameter;
-import triangle.abstractSyntaxTrees.actuals.SingleActualParameterSequence;
-import triangle.abstractSyntaxTrees.actuals.VarActualParameter;
-import triangle.abstractSyntaxTrees.aggregates.ArrayAggregate;
-import triangle.abstractSyntaxTrees.aggregates.MultipleArrayAggregate;
-import triangle.abstractSyntaxTrees.aggregates.MultipleRecordAggregate;
-import triangle.abstractSyntaxTrees.aggregates.RecordAggregate;
-import triangle.abstractSyntaxTrees.aggregates.SingleArrayAggregate;
-import triangle.abstractSyntaxTrees.aggregates.SingleRecordAggregate;
-import triangle.abstractSyntaxTrees.commands.AssignCommand;
-import triangle.abstractSyntaxTrees.commands.CallCommand;
-import triangle.abstractSyntaxTrees.commands.Command;
-import triangle.abstractSyntaxTrees.commands.EmptyCommand;
-import triangle.abstractSyntaxTrees.commands.IfCommand;
-import triangle.abstractSyntaxTrees.commands.LetCommand;
-import triangle.abstractSyntaxTrees.commands.SequentialCommand;
-import triangle.abstractSyntaxTrees.commands.WhileCommand;
-import triangle.abstractSyntaxTrees.declarations.ConstDeclaration;
-import triangle.abstractSyntaxTrees.declarations.Declaration;
-import triangle.abstractSyntaxTrees.declarations.FuncDeclaration;
-import triangle.abstractSyntaxTrees.declarations.ProcDeclaration;
-import triangle.abstractSyntaxTrees.declarations.SequentialDeclaration;
-import triangle.abstractSyntaxTrees.declarations.VarDeclaration;
-import triangle.abstractSyntaxTrees.expressions.ArrayExpression;
-import triangle.abstractSyntaxTrees.expressions.BinaryExpression;
-import triangle.abstractSyntaxTrees.expressions.CallExpression;
-import triangle.abstractSyntaxTrees.expressions.CharacterExpression;
-import triangle.abstractSyntaxTrees.expressions.Expression;
-import triangle.abstractSyntaxTrees.expressions.IfExpression;
-import triangle.abstractSyntaxTrees.expressions.IntegerExpression;
-import triangle.abstractSyntaxTrees.expressions.LetExpression;
-import triangle.abstractSyntaxTrees.expressions.RecordExpression;
-import triangle.abstractSyntaxTrees.expressions.UnaryExpression;
-import triangle.abstractSyntaxTrees.expressions.VnameExpression;
-import triangle.abstractSyntaxTrees.formals.ConstFormalParameter;
-import triangle.abstractSyntaxTrees.formals.EmptyFormalParameterSequence;
-import triangle.abstractSyntaxTrees.formals.FormalParameter;
-import triangle.abstractSyntaxTrees.formals.FormalParameterSequence;
-import triangle.abstractSyntaxTrees.formals.FuncFormalParameter;
-import triangle.abstractSyntaxTrees.formals.MultipleFormalParameterSequence;
-import triangle.abstractSyntaxTrees.formals.ProcFormalParameter;
-import triangle.abstractSyntaxTrees.formals.SingleFormalParameterSequence;
-import triangle.abstractSyntaxTrees.formals.VarFormalParameter;
+import triangle.abstractSyntaxTrees.actuals.*;
+import triangle.abstractSyntaxTrees.aggregates.*;
+import triangle.abstractSyntaxTrees.commands.*;
+import triangle.abstractSyntaxTrees.declarations.*;
+import triangle.abstractSyntaxTrees.expressions.*;
+import triangle.abstractSyntaxTrees.formals.*;
 import triangle.abstractSyntaxTrees.terminals.CharacterLiteral;
 import triangle.abstractSyntaxTrees.terminals.Identifier;
 import triangle.abstractSyntaxTrees.terminals.IntegerLiteral;
 import triangle.abstractSyntaxTrees.terminals.Operator;
-import triangle.abstractSyntaxTrees.types.ArrayTypeDenoter;
-import triangle.abstractSyntaxTrees.types.FieldTypeDenoter;
-import triangle.abstractSyntaxTrees.types.MultipleFieldTypeDenoter;
-import triangle.abstractSyntaxTrees.types.RecordTypeDenoter;
-import triangle.abstractSyntaxTrees.types.SimpleTypeDenoter;
-import triangle.abstractSyntaxTrees.types.SingleFieldTypeDenoter;
-import triangle.abstractSyntaxTrees.types.TypeDeclaration;
-import triangle.abstractSyntaxTrees.types.TypeDenoter;
+import triangle.abstractSyntaxTrees.types.*;
 import triangle.abstractSyntaxTrees.vnames.DotVname;
 import triangle.abstractSyntaxTrees.vnames.SimpleVname;
 import triangle.abstractSyntaxTrees.vnames.SubscriptVname;
@@ -337,7 +287,18 @@ public class Parser {
 		}
 			break;
 
-		case SEMICOLON:
+			case REPEAT: {
+				acceptIt();  // Consume 'repeat'
+				Command cAST = parseSingleCommand();  // Parse the body of the loop first
+				accept(Token.Kind.UNTIL);  // Make sure the 'until' keyword is present
+				Expression eAST = parseExpression();  // Parse the condition that follows 'until'
+				finish(commandPos);
+				commandAST = new RepeatCommand(eAST, cAST, commandPos);  // Create the RepeatCommand AST node
+			}
+			break;
+
+
+			case SEMICOLON:
 		case END:
 		case ELSE:
 		case IN:

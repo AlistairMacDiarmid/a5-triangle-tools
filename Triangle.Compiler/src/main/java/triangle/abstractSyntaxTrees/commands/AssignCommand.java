@@ -21,6 +21,7 @@ package triangle.abstractSyntaxTrees.commands;
 import triangle.abstractSyntaxTrees.expressions.Expression;
 import triangle.abstractSyntaxTrees.visitors.CommandVisitor;
 import triangle.abstractSyntaxTrees.vnames.Vname;
+import triangle.codeGenerator.Frame;
 import triangle.syntacticAnalyzer.SourcePosition;
 
 public class AssignCommand extends Command {
@@ -31,9 +32,12 @@ public class AssignCommand extends Command {
 		E = eAST;
 	}
 
-	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, TArg arg) {
-		return v.visitAssignCommand(this, arg);
+
+	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, Object arg) {
+		return v.visitAssignCommand(this, (TArg) arg);
 	}
+
+
 
 	public final Vname V;
 	public Expression E;

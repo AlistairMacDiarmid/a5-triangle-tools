@@ -31,8 +31,8 @@ public class IfCommand extends Command {
 		C2 = c2AST;
 	}
 
-	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, TArg arg) {
-		return v.visitIfCommand(this, arg);
+	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, Object arg) {
+		return v.visitIfCommand(this, (TArg) arg);
 	}
 
 	public Expression E;

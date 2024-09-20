@@ -31,8 +31,8 @@ public class CallCommand extends Command {
 		APS = apsAST;
 	}
 
-	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, TArg arg) {
-		return v.visitCallCommand(this, arg);
+	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, Object arg) {
+		return v.visitCallCommand(this, (TArg) arg);
 	}
 
 	public final Identifier I;

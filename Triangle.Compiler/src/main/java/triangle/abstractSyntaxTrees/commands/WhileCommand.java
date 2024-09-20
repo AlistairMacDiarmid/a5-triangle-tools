@@ -30,8 +30,8 @@ public class WhileCommand extends Command {
 		C = cAST;
 	}
 
-	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, TArg arg) {
-		return v.visitWhileCommand(this, arg);
+	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, Object arg) {
+		return v.visitWhileCommand(this, (TArg) arg);
 	}
 
 	public Expression E;

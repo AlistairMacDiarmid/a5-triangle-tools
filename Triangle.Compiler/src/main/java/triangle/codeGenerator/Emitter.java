@@ -1,16 +1,12 @@
 package triangle.codeGenerator;
 
+import triangle.ErrorReporter;
+import triangle.abstractMachine.*;
+
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
-import triangle.ErrorReporter;
-import triangle.abstractMachine.Instruction;
-import triangle.abstractMachine.Machine;
-import triangle.abstractMachine.OpCode;
-import triangle.abstractMachine.Primitive;
-import triangle.abstractMachine.Register;
 
 public class Emitter {
 

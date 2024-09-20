@@ -1,0 +1,23 @@
+let
+  type NameType ~ array 10 of Char;  ! Step 1: Define an array type for a name with a length of 10 characters
+  var name: NameType;                ! Step 2: Declare an array to store the name
+  var i: Integer                     ! A variable for looping
+in
+  begin
+    ! Step 3: Get input from the user
+    i := 0;
+    while i < 10 do
+      begin
+        get(var name[i]);  ! Get a character from the user and store it in the array
+        i := i + 1;
+      end;
+    
+    ! Step 4: Print the name stored in the array
+    i := 0;
+    while i < 10 do
+      begin
+        put(name[i]);  ! Print each character in the array
+        i := i + 1;
+      end;
+    puteol();  ! Print a new line after the name
+  end

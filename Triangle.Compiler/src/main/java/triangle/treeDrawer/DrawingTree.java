@@ -18,9 +18,7 @@
 
 package triangle.treeDrawer;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.*;
 
 public class DrawingTree {
 

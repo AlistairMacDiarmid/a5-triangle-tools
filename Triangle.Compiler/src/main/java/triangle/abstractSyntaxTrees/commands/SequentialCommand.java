@@ -29,8 +29,8 @@ public class SequentialCommand extends Command {
 		C2 = c2AST;
 	}
 
-	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, TArg arg) {
-		return v.visitSequentialCommand(this, arg);
+	public <TArg, TResult> TResult visit(CommandVisitor<TArg, TResult> v, Object arg) {
+		return v.visitSequentialCommand(this, (TArg) arg);
 	}
 
 	public final Command C1, C2;
